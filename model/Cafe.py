@@ -1,73 +1,89 @@
 from abc import ABC, abstractmethod
-from datetime import datetime
+from datetime import datetime, time
 
 class Cafe(ABC):
 
-    """
-    Classe abstrata base para todos os cafés.
-    Define estrutura e obriga as subclasses a implementarem descrição e preço.
-    """
-
-    def __init__(self, nome, preco_inicial, tamanho, intensidade):
-        # É o método construtor da classe. Ele é chamado automaticamente quando você cria uma nova instância (objeto) da classe.
+    def __init__(self, nome, preco, tamanho, intensidade, gramas):
         self.nome = nome
-        self.preco_inicial = preco_inicial
-        self.__tamanho = tamanho.lower()
-        self.__intensidade = intensidade.lower()
-        self.__hora_preparo = None 
+        self.preco = preco
+        self.tamanho = tamanho.lower()
+        self.intensidade = intensidade.lower()
+        self.gramas = gramas
+        self.hora_preparo = None  # será definido ao preparar 
+                                  # então no caso ele vai atualizar quando
+                                  # utilizar o método preparar atribui a hr dee agr 
 
     @property
-    def tamanho(self):
-        # Getter: Retorna o valor do atributo "privado"
+    def intensidade (self):
+        return self.__intensidade 
+    
+    @intensidade.setter
+    def intensidade (self, intensidadee):
+        intensidades_validas = ["suave", "normal", "forte"]
+        if intensidadee not in intensidades_validas:
+            raise ValueError("Intensidade inválida. Use: suave, normal ou forte.")
+        self.__intensidade = intensidadee
+
+    @property
+    def tamanho (self):
         return self.__tamanho
     
     @tamanho.setter
-    def tamanho(self, novo_tamanho):
-        tamanho_padrao = novo_tamanho.lower()
-        tamanhos_validos = ["pequeno", "medio", "médio", "grande"]
-
-        if tamanho_padrao not in tamanhos_validos:
+    def tamanho (self, tamanhoo):
+        tamanhos_validos = ["pequeno", "medio", "médio", "grande"] # cria um enum 
+        if tamanhoo not in tamanhos_validos:
             raise ValueError("Tamanho inválido. Use: pequeno, médio ou grande.")
-        # Setter: Aplica a lógica (aqui, garantir minúsculas) antes de atribuir ao "privado"
-        self.__tamanho = tamanho_padrao
+        self.__tamanho = tamanhoo
 
     @property
-    def intensidade(self):
-        return self.__intensidade
+    def preco (self):
+        return self.__preco
     
-    @intensidade.setter
-    def intensidade(self, nova_intensidade):
-        #Verifica se a intensidade informada é válida.
-        intensidade_padrao = nova_intensidade.lower()
-
-        intensidades_validas = ["suave", "normal", "forte"]
-        if intensidade_padrao not in intensidades_validas:
-            raise ValueError("Intensidade inválida. Use: suave, normal ou forte.")
-        
-        self.__intensidade = intensidade_padrao
+    @preco.setter
+    def preco (self, precoo):
+        if precoo < 0.00:
+            raise ValueError ('Preço deve ser positivo !')
+        self.__preco = precoo
 
     @property
-    def hora_preparo(self):
-        # Adiciona lógica (por exemplo, retorna uma mensagem se ainda não foi setado)
-        if self.__hora_preparo is None:
-            return "O café ainda não foi preparado."
+    def nome(self):
+        return self.__nome
+
+    @nome.setter
+    def nome (self, nomee):
+        if (nomee == None):
+            raise ValueError (f"Nome é um campo obrigatório.")
+        self.__nome = nomee.title()
+
+    @property
+    def gramas (self):
+        return self.__gramas
+    
+    @gramas.setter
+    def gramas (self, gramass):
+        if gramass < 0 :
+            raise ValueError ("As gramas devem tem um valor positivo !")
+        self.__gramas = gramass
+        
+    @property
+    def hora_preparo (self):
         return self.__hora_preparo
     
     @hora_preparo.setter
-    def hora_preparo(self, momento: datetime):
-        # Lógica de validação pode ir aqui (ex: se é um objeto datetime)
-        self.__hora_preparo = momento
-        
-    @abstractmethod
-    def descricao(self):
-        # A subclasse DEVE implementar 
-        pass
+    def hora_preparo (self, horario):
+        self.__hora_preparo = horario
+      
+###### MÉTODOS ##########
 
     @abstractmethod
-    def preco_final(self):
-        # A subclasse DEVE implementar
+    def preparar(self):
+        data_hora = datetime.now()
+        hora_agr = data_hora.time()
+        self.hora_preparo = hora_agr
         pass
+ 
 
-    @abstractmethod
-    def gramas(self):
-        pass
+     
+    def _str_(self):
+         #Exibição simples do café.
+         return f"{self.nome} - {self.tamanho} - R$ {self.preco:.2f}"
