@@ -6,12 +6,13 @@ class Cafe(ABC):
     def __init__(self, nome, preco, tamanho, intensidade, gramas):
         self.nome = nome
         self.preco = preco
-        self.tamanho = tamanho.lower()
-        self.intensidade = intensidade.lower()
+        self.intensidade = intensidade
         self.gramas = gramas
         self.hora_preparo = None  # será definido ao preparar 
                                   # então no caso ele vai atualizar quando
-                                  # utilizar o método preparar atribui a hr dee agr 
+                                  # utilizar o método preparar atribui a hr dee agr
+        self.tamanho = tamanho
+        self.adicionais = []
 
     @property
     def intensidade (self):
@@ -20,9 +21,10 @@ class Cafe(ABC):
     @intensidade.setter
     def intensidade (self, intensidadee):
         intensidades_validas = ["suave", "normal", "forte"]
-        if intensidadee not in intensidades_validas:
+        intensidade_padrao = intensidadee.lower()
+        if intensidade_padrao not in intensidades_validas:
             raise ValueError("Intensidade inválida. Use: suave, normal ou forte.")
-        self.__intensidade = intensidadee
+        self.__intensidade = intensidade_padrao
 
     @property
     def tamanho (self):
@@ -30,10 +32,11 @@ class Cafe(ABC):
     
     @tamanho.setter
     def tamanho (self, tamanhoo):
-        tamanhos_validos = ["pequeno", "medio", "médio", "grande"] # cria um enum 
-        if tamanhoo not in tamanhos_validos:
+        tamanhos_validos = ["pequeno", "medio", "médio", "grande"]
+        tamanho_padrao = tamanhoo.lower()
+        if tamanho_padrao not in tamanhos_validos:
             raise ValueError("Tamanho inválido. Use: pequeno, médio ou grande.")
-        self.__tamanho = tamanhoo
+        self.__tamanho = tamanho_padrao
 
     @property
     def preco (self):
@@ -72,18 +75,33 @@ class Cafe(ABC):
     @hora_preparo.setter
     def hora_preparo (self, horario):
         self.__hora_preparo = horario
-      
+
+
+
+##### MÉTODOS CONCRETOS  #######
+
+    def registrar_preparo(self):
+        """Método concreto para registrar a hora do preparo."""
+        data_hora = datetime.now()
+        self.hora_preparo = data_hora.time() # Chama o setter hora_preparo
+
+    def adicional(self, adicional):
+        """Adiciona um objeto Adicional (Decorator) à lista interna."""
+        self.adicionais.append(adicional)
+
 ###### MÉTODOS ##########
 
     @abstractmethod
     def preparar(self):
-        data_hora = datetime.now()
-        hora_agr = data_hora.time()
-        self.hora_preparo = hora_agr
         pass
- 
 
-     
-    def _str_(self):
+    def calcular_preco(self):
+        pass
+
+    def descricao_detalhada(self):
+         return f"{self.nome} de {self.tamanho}."
+
+    '''def __str__(self):
          #Exibição simples do café.
          return f"{self.nome} - {self.tamanho} - R$ {self.preco:.2f}"
+    '''

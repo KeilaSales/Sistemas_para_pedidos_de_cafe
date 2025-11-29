@@ -1,55 +1,106 @@
-from Cafe import Cafe 
+from .Cafe import Cafe #base Cafe
+from datetime import datetime
 
 class Expresso(Cafe):
-
-    def __init__(self, tamanho="medio", intensidade="forte"):
-        # 1. Lógica para definir o PREÇO BASE com base no tamanho
-        preco_base = 0
+    
+    def __init__(self, tamanho="medio", intensidade="forte",grao = "extra-fino",acucar = "refinado"): 
         tamanho_padrao = tamanho.lower()
-
-        if tamanho_padrao == "pequeno": preco_base = 4.00
-        elif tamanho_padrao == "médio" or tamanho_padrao == "medio": preco_base = 5.00
-        elif tamanho_padrao == "grande": preco_base = 6.50
-        
+        #ajusta o preco conforme o tamanho
+        if (tamanho_padrao == 'pequeno'):
+             preco = 5
+             gramas = 10
+        elif (tamanho_padrao == 'medio'):
+             preco = 7
+             gramas = 13
+        elif (tamanho_padrao == 'grande'):
+             preco = 9
+             gramas = 15
+        else:
+             raise ValueError('Tamanho inválido. Use pequeno, médio ou grande')
+            
+        # nome, preco, tamanho, intensidade, gramas
         super().__init__(
             nome="Café Expresso", 
-            preco_inicial=preco_base, 
-            tamanho=tamanho,
-            intensidade=intensidade
+            preco= preco, 
+            tamanho= tamanho,
+            intensidade=intensidade,
+            gramas= gramas
         )
+        self.__grao = grao
+        self.__acucar = acucar
 
+    #setter de "grao"
     @property
-    def gramas(self):
-        tam = self.tamanho
-        if tam == "pequeno": return 7
-        if tam == "médio" or tam == "medio": return 10
-        if tam == "grande": return 14
-        return 0
+    def grao(self):
+            return self.__grao
     
+    @grao.setter
+    def grao(self, tipo_grao):
+        # exemplo de validação do grao
+        tipos_validos = ["extra-fino", "fino", "medio"]
+
+        if tipo_grao:
+            tipo_grao_padrao = tipo_grao.lower()
+            if tipo_grao_padrao not in tipos_validos:
+               raise ValueError("Tipo de grão inválido. Use: extra-fino, fino ou medio.")
+           
+        if tipo_grao:
+        #se o tipo grao for falso
+            self.__grao = tipo_grao_padrao
+        else:
+            self.__grao = None
+
+
+#setter de "acucar"
     @property
-    def preco_final(self):
-        preco = self.preco_inicial
+    def acucar(self):
+        return self.__acucar
+    
+    @acucar.setter
+    def acucar(self, tipo_acucar):
+        tipos_validos = ["refinado", "cristal", "mascavo"]
         
-        # SOMA o preço de todos os objetos adicionais anexados (Decorator)
-        for adicional in self.__adicionais:
-            preco += adicional.preco_adicional
+        if tipo_acucar:
+            tipo_acucar_padrao = tipo_acucar.lower()
+            if tipo_acucar_padrao not in tipos_validos:
+                 raise ValueError("Tipo de açúcar inválido.")
             
+            self.__acucar = tipo_acucar_padrao
+        else:
+            self.__acucar = None
+
+    def calcular_preco(self):
+        """Implementa o método abstrato: Soma o preço base mais os adicionais (Decorator)."""
+        preco = self.preco # Pega o preço base definido no __init__
+        
+        # Adiciona o custo de todos os objetos adicionais anexados (Decorator)
+        # NOTA: Usamos self.adicionais (o nome que você definiu)
+        for adicional in self.adicionais:
+            # Assumindo que o adicional tem o atributo preco_adicional
+             return self.preco
+            
+        preco = self.preco
+
+        for adicional in self.adicionais:
+             preco += adicional.preco_adicional
+        
         return preco
-    
-    @property
-    def descricao(self):
-        desc = f"Expresso ({self.intensidade}) {self.tamanho} com {self.gramas}g."
-        
-        # Adiciona a descrição de todos os objetos adicionais
-        adicionais_str = ", ".join([a.nome for a in self._adicionais])
-        if adicionais_str:
-            desc += f" Adicionais: {adicionais_str}."
-        
-        return desc
 
 
-    # 6. Método de Preparo
     def preparar(self):
-        print(f"\n--- Preparando {self.nome} ---")
-        super().preparar() # Chama o método base
-        print(f"- Extraindo {self.gramas}g de café intenso.")
+       """Implementa o método abstrato 'preparar'."""
+       print(f"\n--- Preparo Base: {self.nome} ({self.tamanho}) ---")
+       print(f"- Extraindo {self.gramas}g de café {self.grao}.")
+    
+       # Chama o registrador e imprime a descrição final (limpeza)
+       self.registrar_preparo() 
+       print(f"Preparo finalizado às {self.hora_preparo}!")
+
+
+    def descricao_detalhada(self):
+       """Implementa o método abstrato: Retorna uma string detalhada do café."""
+       desc = f"Expresso {self.tamanho} ({self.intensidade}) com {self.gramas}g de café {self.grao} e açucar {self.acucar}"
+       
+       return desc
+
+
