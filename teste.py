@@ -1,4 +1,5 @@
 from model.Cafe import Cafe
+from model.MaquinaCafe import MaquinaCafe
 from model.CafeFactory import CafeFactory
 from model.Expresso import Expresso
 from model.Capuccino import Capuccino
@@ -9,6 +10,8 @@ from datetime import datetime
 
 # 1. Cria o café expresso. Apenas tamanho, intensidade, grão e açúcar são necessários,
 # pois o preço e as gramas são calculados automaticamente com base no tamanho.
+
+Maquina = MaquinaCafe()
 
 
 print("=== CAFÉ EXPRESSO (chocolate e chantilly)===")
@@ -36,7 +39,7 @@ print(f"Descrição Detalhada: {cafe_final.descricao_detalhada()}") # Chama o m�
 print("\n=== Preparando ===")
 # Prepara o café (Executa a lógica de preparo de todos os Decorators)
 # O método preparar() geralmente não retorna nada (None)
-cafe_final.preparar() 
+Maquina.preparar_pedido(cafe_final)
 # A linha abaixo deve ser 'print(None)' se o preparar não retornar nada
 # Por isso, é melhor omitir o print(resultado) e focar na saída do próprio preparar
 # print(resultado) 
@@ -71,9 +74,28 @@ print(f"Descrição Detalhada: {capuccino_final.descricao_detalhada()}")
 
 print("\n=== Preparando ===")
 # Prepara o Capuccino (Executa a lógica de Capuccino + Decorator)
-capuccino_final.preparar() 
+Maquina.preparar_pedido(capuccino_final)
 
 # Exibindo o objeto novamente para ver a hora de preparo
 print("\n=== Finalizado ===")
 print(capuccino_final)
 print(f"Hora de Preparo Registrada: {capuccino_final.hora_preparo}")
+
+
+print("\n=== TESTE FINAL: Validação do Singleton ===")
+
+# 1. Tenta obter a instância da máquina novamente (deve ser a mesma MAQUINA)
+maquina_duplicada = MaquinaCafe()
+
+print(f"\nID da Máquina original (MAQUINA): {id(Maquina)}")
+print(f"ID da Máquina duplicada: {id(maquina_duplicada)}")
+
+if Maquina is maquina_duplicada:
+    print("Sucesso: Ambas as referências apontam para o mesmo objeto Singleton!")
+else:
+    print("Falha: O Padrão Singleton não está funcionando.")
+
+# 2. Verifica se o registro de pedidos da Máquina Única contém 2 itens
+print(f"\nRegistro de Preparos (2 itens esperados):")
+for item in Maquina.registro_preparos:
+    print(f"- {item['nome']} preparado às {item['hora']}")
