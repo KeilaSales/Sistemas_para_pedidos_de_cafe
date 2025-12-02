@@ -26,16 +26,16 @@ class MaquinaCafe:
         Recebe o objeto Cafe (que já está decorado com adicionais)
         e inicia o preparo.
         """
-        print(f"\n[Máquina de Café Única] Preparando pedido: {cafe.nome}...")
+        print(f"\n[Máquina de Café] Preparando pedido: {cafe.nome}...")
         
         # A Máquina delega a lógica específica de preparo ao próprio objeto Cafe
         cafe.preparar() 
         
-        self.registro_preparos.append({
-            "nome": cafe.nome, 
-            "hora": cafe.hora_preparo,
-            "descricao": cafe.descricao_detalhada()
-        })
+        #self.registro_preparos.append({
+         #   "nome": cafe.nome, 
+          #  "hora": cafe.hora_preparo,
+           # "descricao": cafe.descricao_detalhada()
+        #})
         
-        print(f"[Máquina de Café Única] Preparo concluído e registrado.")
+        print(f"[Máquina de Café] Preparo concluído e registrado.")
         return cafe

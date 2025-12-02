@@ -46,13 +46,8 @@ class Capuccino(Cafe):
     # --- MÉTODOS ABSTRATOS IMPLEMENTADOS ---
 
     def calcular_preco(self):
-        """Implementa o método abstrato: Soma o preço base mais os adicionais."""
-        preco = self.preco
-        
-        for adicional in self.adicionais:
-            preco += adicional.preco_adicional
-            
-        return preco
+       
+      return self.preco
 
     def preparar(self):
         """Implementa o método abstrato 'preparar' com nova lógica de ingredientes."""
@@ -71,7 +66,7 @@ class Capuccino(Cafe):
         print(f"Preparo finalizado às {self.hora_preparo}!")
 
     def descricao_detalhada(self):
-        """Implementa o método abstrato: Retorna uma string detalhada do Capuccino."""
+
         desc = f"Capuccino {self.tamanho} ({self.intensidade}). Base de café, leite vaporizado: {self.leite_vaporizado}, leite em pó: {self.leite_em_po}."
         
         return desc

@@ -6,85 +6,114 @@ from model.Capuccino import Capuccino
 from model.Adicionais import Chocolate, Chantilly, CremeDeAvela, LeiteEmPo, Canela
 from datetime import datetime
 
-# --- Teste ---
-
 # 1. Cria o café expresso. Apenas tamanho, intensidade, grão e açúcar são necessários,
 # pois o preço e as gramas são calculados automaticamente com base no tamanho.
 
 Maquina = MaquinaCafe()
 
 
-print("=== CAFÉ EXPRESSO (chocolate e chantilly)===")
+print("\n=== CAFÉ EXPRESSO (chocolate e chantilly)===\n")
 cafe_expresso = CafeFactory.criar_cafe(
     tipo="expresso",
     tamanho="pequeno",
     intensidade="forte",
 )
-
-# 2. Demonstração do Padrão Decorator (Composição em cascata)
+# Padrão Decorator (Composição em cascata)
 # Adicionando Chocolate ao café base
 cafe_decorado = Chocolate(cafe_expresso)
 # Adicionando Chantilly ao café já decorado
 cafe_final = Chantilly(cafe_decorado)
 
+# --- Fluxo ---
 
-# --- Demonstração do Fluxo ---
-
-# Exibe a descrição formatada usando o método __str__ da classe base
-print(cafe_final) 
-# Exibe a descrição detalhada e o preço final
-print(f"Preço Calculado: R$ {cafe_final.preco:.2f}")
-print(f"Descrição Detalhada: {cafe_final.descricao_detalhada()}") # Chama o método de acúmulo de string
-
-print("\n=== Preparando ===")
+print("=== Preparando ===")
 # Prepara o café (Executa a lógica de preparo de todos os Decorators)
-# O método preparar() geralmente não retorna nada (None)
 Maquina.preparar_pedido(cafe_final)
-# A linha abaixo deve ser 'print(None)' se o preparar não retornar nada
-# Por isso, é melhor omitir o print(resultado) e focar na saída do próprio preparar
-# print(resultado) 
-
 # Exibindo o objeto novamente para ver a hora de preparo
-print("\n=== Finalizado ===")
+print("=== Finalizado ===")
 print(cafe_final)
 print(f"Hora de Preparo Registrada: {cafe_final.hora_preparo}")
 
 
-print("\n=== CAPUCCINO (com creme de avelã)===")
 
-# 1. Cria o Capuccino (Base: R$ 9.50. Ingredientes internos fixos: leite vaporizado e pó)
+print("\n=== CAPUCCINO (com creme de avelã)===\n")
 capuccino = CafeFactory.criar_cafe(
     tipo="capuccino",
     tamanho="medio",
     intensidade="normal"
 )
-
-# 2. Demonstração do Padrão Decorator (Composição)
-# Adicionando Creme de Avelã (Total: R$ 9.50 + R$ 3.50 = R$ 13.00)
+#Decorator
 capuccino_final = CremeDeAvela(capuccino)
 
-# --- Demonstração do Fluxo ---
-
-# A descrição deve mostrar os ingredientes fixos e o adicional.
-print(capuccino_final) 
-# Preço Calculado: R$ 13.00
-print(f"Preço Calculado: R$ {capuccino_final.preco:.2f}")
-print(f"Descrição Detalhada: {capuccino_final.descricao_detalhada()}")
-
-
-print("\n=== Preparando ===")
-# Prepara o Capuccino (Executa a lógica de Capuccino + Decorator)
+print("=== Preparando ===")
+# Executa a lógica de Capuccino + Decorator
 Maquina.preparar_pedido(capuccino_final)
-
-# Exibindo o objeto novamente para ver a hora de preparo
-print("\n=== Finalizado ===")
+print("=== Finalizado ===")
 print(capuccino_final)
 print(f"Hora de Preparo Registrada: {capuccino_final.hora_preparo}")
 
 
-print("\n=== TESTE FINAL: Validação do Singleton ===")
 
-# 1. Tenta obter a instância da máquina novamente (deve ser a mesma MAQUINA)
+print("\n=== MOCCACINO (com Canela) ===\n")
+moccacino = CafeFactory.criar_cafe(
+      tipo="moccacino",
+      tamanho="medio",
+      intensidade="forte"
+)
+
+moccacino_final = Canela(moccacino)
+
+print("=== Preparando ===")
+# Usa o Singleton para preparar o Moccacino
+Maquina.preparar_pedido(moccacino_final)
+
+print("=== Finalizado ===")
+print(moccacino_final)
+print(f"Hora de Preparo Registrada: {moccacino_final.hora_preparo}")
+
+
+
+print("\n=== LATTE (com Chantilly) ===\n")
+latte = CafeFactory.criar_cafe(
+    tipo="latte",
+    tamanho="medio",
+    intensidade="normal"
+)
+
+latte_final = Chantilly(latte)
+
+print("=== Preparando ===")
+
+Maquina.preparar_pedido(latte_final)
+
+print("=== Finalizado ===")
+print(latte_final)
+print(f"Hora de Preparo Registrada: {latte_final.hora_preparo}")
+
+
+
+print("\n=== GOURMET (com Creme de Avelã) ===\n")
+gourmet = CafeFactory.criar_cafe(
+    tipo="gourmet",
+    tamanho="medio",
+    intensidade="forte"
+)
+
+gourmet_final = CremeDeAvela(gourmet)
+
+print("=== Preparando ===")
+
+Maquina.preparar_pedido(gourmet_final)
+
+print("=== Finalizado ===")
+print(gourmet_final)
+print(f"Hora de Preparo Registrada: {gourmet_final.hora_preparo}")
+
+
+
+print("\n=== TESTE FINAL: Validação do Singleton ===\n")
+
+# Tenta obter a instância da máquina novamente (deve ser a mesma MAQUINA)
 maquina_duplicada = MaquinaCafe()
 
 print(f"\nID da Máquina original (MAQUINA): {id(Maquina)}")
@@ -95,7 +124,7 @@ if Maquina is maquina_duplicada:
 else:
     print("Falha: O Padrão Singleton não está funcionando.")
 
-# 2. Verifica se o registro de pedidos da Máquina Única contém 2 itens
-print(f"\nRegistro de Preparos (2 itens esperados):")
+# Verifica se o registro de pedidos da Máquina Única contém 2 itens
+print(f"\nRegistro de Preparos:")
 for item in Maquina.registro_preparos:
     print(f"- {item['nome']} preparado às {item['hora']}")

@@ -1,9 +1,8 @@
 from .Expresso import Expresso
 from .Capuccino import Capuccino
-#from Latte import Latte
-#from Moccacino import Moccacino
-#from ExtraForte import ExtraForte
-#from Gourmet import Gourmet
+from .Latte import Latte
+from .Moccacino import Moccacino
+from .Gourmet import Gourmet
 
 class CafeFactory:
     #    Cria objetos de café com base no tipo escolhido.
@@ -24,9 +23,6 @@ class CafeFactory:
         
         elif tipo == "moccacino":
             return Moccacino(tamanho=tamanho, intensidade=intensidade)
-        
-        elif tipo == "extraforte":
-            return ExtraForte(tamanho=tamanho, intensidade=intensidade)
         
         elif tipo == "gourmet":
             return Gourmet(tamanho=tamanho, intensidade=intensidade)

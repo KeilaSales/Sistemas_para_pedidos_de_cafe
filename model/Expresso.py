@@ -70,21 +70,8 @@ class Expresso(Cafe):
             self.__acucar = None
 
     def calcular_preco(self):
-        """Implementa o método abstrato: Soma o preço base mais os adicionais (Decorator)."""
-        preco = self.preco # Pega o preço base definido no __init__
-        
-        # Adiciona o custo de todos os objetos adicionais anexados (Decorator)
-        # NOTA: Usamos self.adicionais (o nome que você definiu)
-        for adicional in self.adicionais:
-            # Assumindo que o adicional tem o atributo preco_adicional
-             return self.preco
-            
-        preco = self.preco
-
-        for adicional in self.adicionais:
-             preco += adicional.preco_adicional
-        
-        return preco
+       
+      return self.preco
 
 
     def preparar(self):
@@ -98,7 +85,7 @@ class Expresso(Cafe):
 
 
     def descricao_detalhada(self):
-       """Implementa o método abstrato: Retorna uma string detalhada do café."""
+       
        desc = f"Expresso {self.tamanho} ({self.intensidade}) com {self.gramas}g de café {self.grao} e açucar {self.acucar}"
        
        return desc

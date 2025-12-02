@@ -77,7 +77,6 @@ class Cafe(ABC):
         self.__hora_preparo = horario
 
 
-
 ##### MÉTODOS CONCRETOS  #######
 
     def registrar_preparo(self):
@@ -101,7 +100,3 @@ class Cafe(ABC):
     def descricao_detalhada(self):
          return f"{self.nome} de {self.tamanho}."
 
-    '''def __str__(self):
-         #Exibição simples do café.
-         return f"{self.nome} - {self.tamanho} - R$ {self.preco:.2f}"
-    '''
