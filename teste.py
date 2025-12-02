@@ -11,7 +11,7 @@ from datetime import datetime
 
 Maquina = MaquinaCafe()
 
-
+print("\n----------------------------------------------------------\n")
 print("\n=== CAFÉ EXPRESSO (chocolate e chantilly)===\n")
 cafe_expresso = CafeFactory.criar_cafe(
     tipo="expresso",
@@ -35,7 +35,7 @@ print(cafe_final)
 print(f"Hora de Preparo Registrada: {cafe_final.hora_preparo}")
 
 
-
+print("\n----------------------------------------------------------\n")
 print("\n=== CAPUCCINO (com creme de avelã)===\n")
 capuccino = CafeFactory.criar_cafe(
     tipo="capuccino",
@@ -53,7 +53,7 @@ print(capuccino_final)
 print(f"Hora de Preparo Registrada: {capuccino_final.hora_preparo}")
 
 
-
+print("\n----------------------------------------------------------\n")
 print("\n=== MOCCACINO (com Canela) ===\n")
 moccacino = CafeFactory.criar_cafe(
       tipo="moccacino",
@@ -72,7 +72,7 @@ print(moccacino_final)
 print(f"Hora de Preparo Registrada: {moccacino_final.hora_preparo}")
 
 
-
+print("\n----------------------------------------------------------\n")
 print("\n=== LATTE (com Chantilly) ===\n")
 latte = CafeFactory.criar_cafe(
     tipo="latte",
@@ -91,7 +91,7 @@ print(latte_final)
 print(f"Hora de Preparo Registrada: {latte_final.hora_preparo}")
 
 
-
+print("\n----------------------------------------------------------\n")
 print("\n=== GOURMET (com Creme de Avelã) ===\n")
 gourmet = CafeFactory.criar_cafe(
     tipo="gourmet",
@@ -110,7 +110,7 @@ print(gourmet_final)
 print(f"Hora de Preparo Registrada: {gourmet_final.hora_preparo}")
 
 
-
+print("\n----------------------------------------------------------\n")
 print("\n=== TESTE FINAL: Validação do Singleton ===\n")
 
 # Tenta obter a instância da máquina novamente (deve ser a mesma MAQUINA)
