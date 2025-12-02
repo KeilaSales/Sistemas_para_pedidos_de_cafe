@@ -12,7 +12,6 @@ class Cafe(ABC):
                                   # então no caso ele vai atualizar quando
                                   # utilizar o método preparar atribui a hr dee agr
         self.tamanho = tamanho
-        self.adicionais = []
 
     @property
     def intensidade (self):
@@ -77,16 +76,12 @@ class Cafe(ABC):
         self.__hora_preparo = horario
 
 
-##### MÉTODOS CONCRETOS  #######
+##### MÉTODO CONCRETOS  #######
 
     def registrar_preparo(self):
         """Método concreto para registrar a hora do preparo."""
         data_hora = datetime.now()
         self.hora_preparo = data_hora.time() # Chama o setter hora_preparo
-
-    def adicional(self, adicional):
-        """Adiciona um objeto Adicional (Decorator) à lista interna."""
-        self.adicionais.append(adicional)
 
 ###### MÉTODOS ##########
 
