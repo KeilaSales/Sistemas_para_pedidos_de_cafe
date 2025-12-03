@@ -46,3 +46,7 @@ O sistema permite criar e processar pedidos de café, aplicando regras de negóc
 * MaquinaDeCafe.py:	Singleton = Controla o processo de preparar_pedido e o registro de logs. MaquinaDeCafe.
 
 * teste.py: Arquivo principal usado para demonstrar a integração de todos os padrões.
+
+* Diagrama UML:
+  
+![Diagrama_TOO](https://github.com/user-attachments/assets/af50cc0b-e9bf-499a-8878-79c04a2d6d79)
