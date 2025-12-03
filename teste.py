@@ -6,31 +6,44 @@ from model.Capuccino import Capuccino
 from model.Adicionais import Chocolate, Chantilly, CremeDeAvela, LeiteEmPo, Canela
 from datetime import datetime
 
-# 1. Cria o café expresso. Apenas tamanho, intensidade, grão e açúcar são necessários,
-# pois o preço e as gramas são calculados automaticamente com base no tamanho.
+# --- INICIALIZAÇÃO E FLUXO ---
 
+# 1. PASSO: INICIALIZA O CENTRO DE TUDO (SINGLETON)
+
+# Garante que apenas uma instância da Máquina de Café exista.
 Maquina = MaquinaCafe()
 
+# TESTE 1:
 print("\n----------------------------------------------------------\n")
 print("\n=== CAFÉ EXPRESSO (chocolate e chantilly)===\n")
+
+# 2. CRIAÇÃO: Pedido à FACTORY
+# A Factory cria a instância 'Expresso' com a lógica de preço/gramas.
 cafe_expresso = CafeFactory.criar_cafe(
     tipo="expresso",
     tamanho="pequeno",
     intensidade="forte",
 )
-# Padrão Decorator (Composição em cascata)
+
+#  3. DECORATOR: (Composição em cascata)
+# O objeto base 'cafe_expresso' é envelopado (decorado) sequencialmente.
 # Adicionando Chocolate ao café base
 cafe_decorado = Chocolate(cafe_expresso)
 # Adicionando Chantilly ao café já decorado
 cafe_final = Chantilly(cafe_decorado)
 
-# --- Fluxo ---
-
+# --- PREPARO: INÍCIO ---
 print("=== Preparando ===")
+# 4. EXECUÇÃO SINGLETON: A m,aquina inicia o processo central
+# Chama Maquina.preparar_pedido(), que chama cafe_final.preparar().
+# O fluxo de execução desce pela cascata Decorator.
 # Prepara o café (Executa a lógica de preparo de todos os Decorators)
 Maquina.preparar_pedido(cafe_final)
-# Exibindo o objeto novamente para ver a hora de preparo
+
+# --- PREPARO: FIM ---
+
 print("=== Finalizado ===")
+# O __str__ do Decorator final (Chantilly) é chamado, mostrando a descrição acumulada.
 print(cafe_final)
 print(f"Hora de Preparo Registrada: {cafe_final.hora_preparo}")
 
@@ -113,7 +126,8 @@ print(f"Hora de Preparo Registrada: {gourmet_final.hora_preparo}")
 print("\n----------------------------------------------------------\n")
 print("\n=== TESTE FINAL: Validação do Singleton ===\n")
 
-# Tenta obter a instância da máquina novamente (deve ser a mesma MAQUINA)
+# 
+# 5. VALIDAÇÃO SINGLETON: Tenta obter a instância da máquina novamente (deve ser a mesma MAQUINA)
 maquina_duplicada = MaquinaCafe()
 
 print(f"\nID da Máquina original (MAQUINA): {id(Maquina)}")
@@ -124,7 +138,8 @@ if Maquina is maquina_duplicada:
 else:
     print("Falha: O Padrão Singleton não está funcionando.")
 
-# Verifica se o registro de pedidos da Máquina Única contém 2 itens
+# 6. VALIDAÇÃO DO REGISTRO DE PREPAROS
+# Confirma se a Máquina Única registrou todos os 5 pedidos.
 print(f"\nRegistro de Preparos:")
 for item in Maquina.registro_preparos:
     print(f"- {item['nome']} preparado às {item['hora']}")

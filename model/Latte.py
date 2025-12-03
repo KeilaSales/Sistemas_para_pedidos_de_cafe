@@ -30,7 +30,7 @@ class Latte(Cafe):
         self.grao = grao
         self.acucar = acucar
        
-        self._leite_vaporizado = "sim" 
+        self.__leite_vaporizado = "sim" 
 
     
     @property
