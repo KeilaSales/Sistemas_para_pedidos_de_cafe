@@ -31,11 +31,11 @@ class MaquinaCafe:
         # A Máquina delega a lógica específica de preparo ao próprio objeto Cafe
         cafe.preparar() 
         
-        #self.registro_preparos.append({
-         #   "nome": cafe.nome, 
-          #  "hora": cafe.hora_preparo,
-           # "descricao": cafe.descricao_detalhada()
-        #})
+        self.registro_preparos.append({
+           "nome": cafe.nome, 
+           "hora": cafe.hora_preparo,
+           "descricao": cafe.descricao_detalhada()
+        })
         
         print(f"[Máquina de Café] Preparo concluído e registrado.")
         return cafe
